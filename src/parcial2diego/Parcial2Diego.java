@@ -2,6 +2,7 @@ package parcial2diego;
 
 import java.util.ArrayList;
 import java.util.Set;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class Parcial2Diego extends javax.swing.JFrame {
@@ -10,10 +11,25 @@ public class Parcial2Diego extends javax.swing.JFrame {
     String nombre = null;
     int cantidad = 0;
     
+    
+    
+    
     public Parcial2Diego() {
         initComponents();
+        limpiarJList();
         
-        
+    }
+    
+    public DefaultListModel limpiarJList(){
+        DefaultListModel modelo = new DefaultListModel();
+        listFood.setModel(modelo);
+        return modelo;
+    }
+    //metodo añsade elementos a la lista
+    public DefaultListModel agregarDatos(String texto){
+        DefaultListModel modelo = (DefaultListModel)listFood.getModel();
+        modelo.addElement(texto);
+        return modelo;
     }
     
     /**
@@ -40,7 +56,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        comboBoxFood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxFood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manzana", "Ciruela", "Durazno", "Pera", "Carne humana", "Carne de res", "Leche" }));
         comboBoxFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxFoodActionPerformed(evt);
@@ -61,7 +77,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
         });
 
         listFood.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "I", "I", "Ii", "I", "IIODFJ", "JHIFBIB", "C" };
+            String[] strings = { "letras", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -147,7 +163,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -165,6 +181,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
             comidas.add(producto);
             labelError.setText(comidas.get(comidas.size()-1).getNombre()+ Integer.toString(comidas.get(comidas.size()-1).getCantidad()));
             
+            agregarDatos(comidas.get(comidas.size()-1).getNombre()+": "+ Integer.toString(comidas.get(comidas.size()-1).getCantidad()));
             
             
         }catch(Exception e){
