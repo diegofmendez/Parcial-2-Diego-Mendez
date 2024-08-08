@@ -183,6 +183,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
             
             agregarDatos(comidas.get(comidas.size()-1).getNombre()+": "+ Integer.toString(comidas.get(comidas.size()-1).getCantidad()));
             
+            JOptionPane.showMessageDialog(null, "Se agregaron los datos");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Enviar un dato permitido");
