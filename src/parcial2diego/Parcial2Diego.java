@@ -1,11 +1,17 @@
 package parcial2diego;
 
-public class Parcial2Diego extends javax.swing.JFrame {
+import java.util.ArrayList;
+import java.util.Set;
+import javax.swing.JOptionPane;
 
+public class Parcial2Diego extends javax.swing.JFrame {
+    
+    ArrayList<Producto> comidas = new ArrayList<Producto>();
+    String nombre = null;
+    int cantidad = 0;
+    
     public Parcial2Diego() {
         initComponents();
-        
-        //Poner aca lo que se necesite
         
         
     }
@@ -29,6 +35,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listFood = new javax.swing.JList<>();
         buttonSendOrder = new javax.swing.JButton();
+        labelError = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,31 +69,38 @@ public class Parcial2Diego extends javax.swing.JFrame {
 
         buttonSendOrder.setText("Enviar orden");
 
+        labelError.setText("Ningun error");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonSendOrder)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(comboBoxFood, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(9, 9, 9)
-                                    .addComponent(jLabel1)))
-                            .addGap(36, 36, 36)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(spinnerNumberFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(buttonAddFood))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(8, 8, 8)
-                                    .addComponent(jLabel2))))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboBoxFood, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel1)))
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(spinnerNumberFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(buttonAddFood))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jLabel2))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelError)
+                        .addGap(117, 117, 117)
+                        .addComponent(buttonSendOrder)))
                 .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,7 +118,9 @@ public class Parcial2Diego extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonSendOrder)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSendOrder)
+                    .addComponent(labelError))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -140,15 +156,22 @@ public class Parcial2Diego extends javax.swing.JFrame {
     private void buttonAddFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddFoodActionPerformed
         // Boton añadir comida
         try{
-           String nombre= comboBoxFood.getItemAt(comboBoxFood.getSelectedIndex());
-            int cantidad= Integer.parseInt(spinnerNumberFood.getValue().toString()); 
+            
+            
+            nombre= comboBoxFood.getItemAt(comboBoxFood.getSelectedIndex());
+            cantidad= Integer.parseInt(spinnerNumberFood.getValue().toString());
+           
+            Producto producto = new Producto(nombre,cantidad);
+            comidas.add(producto);
+            labelError.setText(comidas.get(comidas.size()-1).getNombre()+ Integer.toString(comidas.get(comidas.size()-1).getCantidad()));
+            
+            
+            
         }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Enviar un dato permitido");
+        }finally{
             
         }
-        
-        Producto producto = new Producto(nombre,cantidad);
-        System.out.println(nombre+cantidad);
-        System.out.println(producto.getNombre()+producto.getCantidad());
         
     }//GEN-LAST:event_buttonAddFoodActionPerformed
 
@@ -201,6 +224,7 @@ public class Parcial2Diego extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel labelError;
     private javax.swing.JList<String> listFood;
     private javax.swing.JSpinner spinnerNumberFood;
     // End of variables declaration//GEN-END:variables
